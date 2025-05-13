@@ -1,65 +1,149 @@
-Install Dependencies:
-Ensure you have Python installed. Then, install the required packages:
+# 📸 Instagram Image Scraper with Tor Integration
 
+A powerful Python tool that scrapes public Instagram profile images using Selenium, routes image downloads through the Tor network for anonymity, and analyzes the images using AI (OpenCV for face detection and Tesseract for OCR-based sensitive text detection).
+
+---
+
+## ✨ Features
+
+- 🕵️‍♂️ Scrapes public profile images using **Selenium**
+- 📏 Downloads images sized exactly **335px** wide (or resizes smaller ones)
+- 🧅 Routes requests through the **Tor SOCKS5 proxy** (`socks5h://127.0.0.1:9050`)
+- 🔁 Renews Tor IP:
+  - After each image download
+  - Every 10 seconds
+- 👁️ Detects **faces** in images using OpenCV
+- 🔐 Extracts and flags **sensitive text** using Tesseract OCR (e.g., `ID`, `passport`, `credit card`)
+- 📋 Prints a **clean summary report** of all scanned images
+
+---
+
+## 📦 Requirements
+
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
+```
 
-Install Tesseract OCR:
+Your `requirements.txt` should include:
 
-Windows: Download and install from https://github.com/UB-Mannheim/tesseract/wiki.
+```
+selenium
+requests
+opencv-python
+pytesseract
+Pillow
+stem
+```
 
-macOS: Install via Homebrew:
-brew install tesseract
-Linux: Install using your package manager, e.g., for Debian/Ubuntu:
+---
 
-sudo apt-get install tesseract-ocr
-Install and Configure Tor:
-Download Tor: Install the Tor Expert Bundle from https://www.torproject.org/download/.
+## 🛠 Setup Instructions
 
-Configure torrc File:
-Locate your torrc file.
+### 🔹 1. Clone the Repository
 
-Add the following lines:
-php-template
-Copy
-Edit
+```bash
+git clone https://github.com/yourusername/instagram-image-scraper.git
+cd instagram-image-scraper
+```
+
+---
+
+### 🔹 2. Install Tesseract OCR
+
+- **Windows**: [Download here](https://github.com/UB-Mannheim/tesseract/wiki) and add the path to your system environment variables.
+- **macOS**:
+  ```bash
+  brew install tesseract
+  ```
+- **Linux**:
+  ```bash
+  sudo apt install tesseract-ocr
+  ```
+
+---
+
+### 🔹 3. Install and Configure Tor
+
+- **Download** the [Tor Expert Bundle](https://www.torproject.org/download/)
+- Locate your `torrc` file and add:
+
+```
 ControlPort 9051
 HashedControlPassword <your_hashed_password>
+```
 
-To generate a hashed password, use:
+- To generate the password hash:
+
+```bash
 tor --hash-password your_password
-Replace <your_hashed_password> with the output from the above command.
+```
 
-Download ChromeDriver:
+Use this hash in your `torrc` file.
 
-Ensure you have Google Chrome installed.
+---
 
-Download the ChromeDriver that matches your Chrome version from https://chromedriver.chromium.org/downloads.
+### 🔹 4. Install ChromeDriver
 
-Place the chromedriver executable in a known directory and update the CHROMEDRIVER_PATH variable in your script accordingly.
+- Find your **Chrome version**
+- Download matching **[ChromeDriver](https://chromedriver.chromium.org/downloads)**
+- Add to system PATH or set the path in your script:
+```python
+CHROMEDRIVER_PATH = "C:/Path/To/chromedriver.exe"
+```
 
-Configure the Script:
+---
 
-Set the TOR_PASSWORD variable in your script to match the password you used when generating the hashed control password.
+## ⚙️ Script Configuration
 
-Ensure all paths (e.g., to chromedriver and Tesseract OCR) are correctly set.
+At the top of the script, configure:
 
-<b>Usage</b> 
-Start the Tor service to ensure the SOCKS5 proxy is running.
+```python
+TOR_PASSWORD = "your_password"  # The password used to generate hashed password in torrc
+CHROMEDRIVER_PATH = "C:/Path/To/chromedriver.exe"
+```
 
-Run the script:
-Medium
+---
 
+## 🚀 Usage
+
+1. Make sure **Tor is running**
+2. Run the script:
+
+```bash
 python insta_scraper.py
-When prompted, enter the public Instagram username you wish to scrape.
+```
 
-The script will:
+3. Enter the public Instagram username when prompted.
 
-Extract image URLs using Selenium.
+---
 
-Download images at 335px width, resizing if necessary.
+## 📁 Output
 
-Route requests through the Tor network, renewing the IP as configured.
+- All images are saved in:
+  ```
+  ig_results/<instagram_username>/
+  ```
+- Summary report includes:
+  - File name
+  - Face count
+  - Sensitive text presence (True/False)
 
-Analyze each image for faces and sensitive text.
+---
 
-Log the results for your review.
+## 📄 License
+
+MIT License © 2024 [YourName]
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome! Feel free to fork, improve, and submit a pull request.
+
+---
+
+## 🌟 Support
+
+If you find this project helpful, please **star** the repo to show support.
