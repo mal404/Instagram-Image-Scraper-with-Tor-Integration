@@ -1,0 +1,6 @@
+selenium
+requests
+opencv-python
+pytesseract
+Pillow
+stem
