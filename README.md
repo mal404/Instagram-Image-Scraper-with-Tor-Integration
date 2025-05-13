@@ -132,18 +132,3 @@ python insta_scraper.py
 
 ---
 
-## 📄 License
-
-MIT License © 2024 [YourName]
-
----
-
-## 🤝 Contributing
-
-Contributions welcome! Feel free to fork, improve, and submit a pull request.
-
----
-
-## 🌟 Support
-
-If you find this project helpful, please **star** the repo to show support.
